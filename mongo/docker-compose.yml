@@ -9,7 +9,7 @@ services:
 #      MONGO_INITDB_ROOT_USERNAME: root
 #      MONGO_INITDB_ROOT_PASSWORD: secret
     volumes:
-      - $HOME/workspace/docker-volumes/mongo:/data/db
+      - mongo-data:/data/db
 
   mongo-express:
     image: mongo-express
