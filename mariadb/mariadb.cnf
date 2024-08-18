@@ -1,0 +1,7 @@
+[mariadb]
+slow_query_log = 1
+slow_query_log_file = /var/lib/mysql/slow.log
+long_query_time = 1
+log_queries_not_using_indexes=ON
+log_slow_verbosity=query_plan,explain,engine
+min_examined_row_limit=10

@@ -1,0 +1,34 @@
+services:
+  mariadb:
+    image: mariadb:11.5.2
+    container_name: mariadb_container
+    restart: unless-stopped
+    healthcheck:
+      interval: 5s
+      retries: 5
+      start_period: 3s
+      test:
+        [
+          "CMD",
+          "healthcheck.sh",
+          "--su-mysql",
+          "--connect",
+          "--innodb_initialized"
+        ]
+      timeout: 10s
+#    command:
+#      - default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-mysql}
+      MYSQL_USER: ${MYSQL_USER:-mysql}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-mysql}
+      MYSQL_DATABASE: app_db
+    ports:
+      - "4306:3306"
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d:ro
+      - mariadb_data:/var/lib/mysql
+      - ./mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
+
+volumes:
+  mariadb_data:
